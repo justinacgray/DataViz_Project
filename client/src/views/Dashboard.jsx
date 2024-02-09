@@ -1,9 +1,13 @@
 import React, {useState, useEffect} from 'react';
 import axios from 'axios';
-// import { csrfToken } from 'csrfmiddlewaretoken'; // need to use token to transfer data django
+import CsrfToken from '../components/CsrfToken';
+
 
 
 const Dashboard = () => {
+  const token = CsrfToken('csrftoken');
+
+  console.log('CSRF Token:', CsrfToken);
   
   const [spreadsheet, setSpreadsheet] = useState('');
 
