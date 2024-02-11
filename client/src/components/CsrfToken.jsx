@@ -24,9 +24,11 @@ name 'X-CSRFToken', and Django will recognize it for CSRF protection.
  */
 
 const CsrfToken = (name) => {
+
+    console.log("COOKIE ====> ", document.cookie)
     // Ensure that it's only executed once when the component is initially rendered.
     const [cookieValue, setCookieValue] = useState(() => {
-        // splits the document.cookie string into an array of individual cookies, 
+        // splits the document.cookie string into an array of individual cookies, ';' is the separator 
         // trims each cookie, and finds the one that starts with the specified name.
         const cookies = document.cookie.split(';').map(cookie => cookie.trim());
         console.log("cookies", cookies)
