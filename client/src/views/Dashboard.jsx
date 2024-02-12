@@ -51,7 +51,7 @@ const Dashboard = () => {
 
     
   return (
-    <div>
+    <>
       <form className="" onSubmit={submitForm}>
         <section className="">
           <h2>Upload a Spreadsheet</h2>
@@ -62,9 +62,9 @@ const Dashboard = () => {
           <input className="btn btn-primary" type="submit" value="Enter!" />
         </section>
       </form>
-      <p> ---------------------- </p>
-   
-    </div>
+
+    </>
+
   )
 }
 
