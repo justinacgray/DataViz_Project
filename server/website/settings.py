@@ -55,9 +55,12 @@ MIDDLEWARE = [
 ]
 # 👇 Add this line here
 CORS_ORIGIN_ALLOW_ALL = True
+CORS_ALLOW_CREDENTIALS = True
+CSRF_COOKIE_NAME = "XCSRF-TOKEN"
 
 CORS_ALLOWED_ORIGINS = [
-    "http://127.0.0.1:5173",  # Adjust this to your React app's URL
+    "http://127.0.0.1:5173",
+    "http://localhost:5173",
 ]
 
 # Rest frameWork for api
