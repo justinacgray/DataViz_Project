@@ -4,8 +4,8 @@ from django.middleware.csrf import get_token
 
 
 def home(request):
-    print("request---->", request)
-    print(type(request))
+    # print("request---->", request)
+    # print(type(request))
     return JsonResponse({'message': 'Shalom Todos!'})
 
 
@@ -20,6 +20,7 @@ def dash(request):
 
     if csrf_token:
         # Proceed with file upload and processing
+        
         return JsonResponse({'message': 'File uploaded successfully!'})
     else:
         return JsonResponse({'error': 'CSRF token not found in headers'})
