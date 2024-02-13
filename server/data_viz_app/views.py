@@ -1,6 +1,8 @@
 from django.http import JsonResponse
 from django.views.decorators.csrf import csrf_exempt, ensure_csrf_cookie
 from django.middleware.csrf import get_token
+import pandas as pd
+import numpy as np
 
 
 def home(request):
@@ -15,11 +17,14 @@ def get_csrf(request):
 
 
 @csrf_exempt
-def dash(request):
+def dash(request, csv):
     csrf_token = request.headers.get('X-CSRFToken')
+    # save csv file to path /dataset/
 
     if csrf_token:
-        # Proceed with file upload and processing
+        # filename = 'path/to/csv'
+        # df = pd.read_csv(filename)
+        # print(f"df rows ===> {df.shape[0]} df columns ===> {df.shape[1]}")
         
         return JsonResponse({'message': 'File uploaded successfully!'})
     else:

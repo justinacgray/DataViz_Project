@@ -14,6 +14,8 @@ pymongo = {extras = ["gssapi", "snappy", "srv", "tls"], version = "*"}
 dnspython = "*"
 djongo = "*"
 pytz = "*"
+pandas = "*"
+numpy = "*"
 
 [dev-packages]
 
