@@ -8,6 +8,7 @@ const Dashboard = () => {
   console.log('CSRF Token:', token);
   
   const [file, setFile] = useState('')
+  const [uploadStatus, setUploadStatus] = useState(null);
 
   useEffect(() => {
     const getCSRFToken = async () => {
@@ -41,9 +42,10 @@ const Dashboard = () => {
     axios.post(url, formData, config)
     .then((response)=>{
       console.log("RESPONSE---->", response)
-    }).catch((error)=>{
-      console.log(error)
-    })
+    }).catch ((error) => {
+      console.error('Error uploading file:', error);
+      setUploadStatus('File upload failed');
+      })
   }
 
 
@@ -60,6 +62,7 @@ const Dashboard = () => {
           <button className= 'btn bg-[#7283ad]' >Upload</button>
         </section>
       </form>
+      {uploadStatus && <p>{uploadStatus}</p>}
 
     </>
 

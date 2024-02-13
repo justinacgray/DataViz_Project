@@ -10,12 +10,15 @@ For the full list of settings and their values, see
 https://docs.djangoproject.com/en/5.0/ref/settings/
 """
 
-import dj_database_url
+from djongo import models
 import os
 from dotenv import load_dotenv
 load_dotenv()
 
-REMOTE_SQL_DB = os.getenv('REMOTE_SQL_DB')
+REMOTE_SQL_DB = os.getenv('REMOTE_MONGO')
+USER_NAME = os.getenv('USERNAME')
+USER_PASS = os.getenv('PASSWORD')
+
 
 from pathlib import Path
 
@@ -27,7 +30,7 @@ BASE_DIR = Path(__file__).resolve().parent.parent
 # See https://docs.djangoproject.com/en/5.0/howto/deployment/checklist/
 
 # SECURITY WARNING: keep the secret key used in production secret!
-SECRET_KEY = 'django-insecure-f=o)%o%@lp*&!ggi5k*)3alxv#39fen1*!#m++vkuxmyi-(=#^'
+SECRET_KEY = os.getenv('SECRET_KEY')
 
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
@@ -111,7 +114,16 @@ WSGI_APPLICATION = 'website.wsgi.application'
 
 DATABASES = {
     'default': {
-        # mongoDB atlas config will go here
+        'ENGINE': 'djongo',
+        'ENFORCE_SCHEMA': False,
+        'NAME': 'data_viz_db',
+        'CLIENT': {
+            'host': REMOTE_SQL_DB,
+            'username': USER_NAME,
+            'password': USER_PASS,
+            'authSource': 'admin',
+            'authMechanism': 'SCRAM-SHA-1',
+        }
     }
 }
 
