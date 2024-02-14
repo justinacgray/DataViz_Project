@@ -64,7 +64,7 @@ MIDDLEWARE = [
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
 ]
 # 👇 Add this line here
-CORS_ORIGIN_ALLOW_ALL = True
+CORS_ORIGIN_ALLOW_ALL = False
 CORS_ALLOW_CREDENTIALS = True
 CSRF_COOKIE_NAME = "XCSRF-TOKEN"
 
@@ -163,8 +163,8 @@ USE_TZ = True
 # https://docs.djangoproject.com/en/5.0/howto/static-files/
 
 STATIC_URL = 'static/'
-DATASET_URL = '/datasets/'
-DATASET_ROOT = os.path.join(BASE_DIR, 'datasets')
+MEDIA_URL = '/datasets/'
+MEDIA_ROOT = os.path.join(BASE_DIR, 'datasets')
 print("base dir", BASE_DIR)
 
 # Default primary key field type
