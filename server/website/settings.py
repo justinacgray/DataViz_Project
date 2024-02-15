@@ -16,8 +16,9 @@ from dotenv import load_dotenv
 load_dotenv()
 
 REMOTE_SQL_DB = os.getenv('REMOTE_MONGO')
-USER_NAME = os.getenv('USERNAME')
+USER_NAME = os.getenv('USER_NAME')
 USER_PASS = os.getenv('PASSWORD')
+
 
 
 from pathlib import Path
@@ -48,7 +49,7 @@ INSTALLED_APPS = [
     'django.contrib.messages',
     'django.contrib.staticfiles',
     'rest_framework',
-    'website',
+    'data_viz_app',
     'corsheaders',
 ]
 
@@ -85,6 +86,9 @@ REST_FRAMEWORK = {
     'DEFAULT_AUTHENTICATION_CLASSES': [
         'rest_framework.authentication.BasicAuthentication',
     ],
+    'DEFAULT_PARSER_CLASSES': [
+        'rest_framework.parsers.JSONParser',
+    ]
 }
 
 

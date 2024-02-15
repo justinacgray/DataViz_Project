@@ -7,36 +7,45 @@ from rest_framework.views import APIView
 from rest_framework.response import Response
 import pandas as pd
 import numpy as np
+from .models import *
+from rest_framework.parsers import FileUploadParser, MultiPartParser, FormParser, JSONParser
+from rest_framework.response import Response
+from rest_framework.views import APIView
+from rest_framework import status
 
 
-class DataInsights():
-    def home(request):
-        print("request---->", request)
-        print(type(request))
+class DataInsights(APIView):
+    parser_classes = (MultiPartParser, FormParser, FileUploadParser, JSONParser)
+    
+    def home(self, request):
+        # print("request---->", request)
+        # print(type(request))
         return JsonResponse({'message': 'Shalom Todos!'})
 
 
-    def get_csrf(request):
+    def get_csrf(self, request):
         token = get_token(request)
         return JsonResponse({'csrfToken': token})
 
 
     @csrf_exempt
-    def dash(request):
-        if request.method == "POST":
-            csrf_token = request.headers.get('X-CSRFToken')
-            form = ModelFormWithFileField(request.POST, request.FILES)
-            if form.is_valid():
-                # file is saved
-                form.save()
-        print("request", request)
+    def dash(self, request, *args, **kwargs):
+        csrf_token = request.headers.get('X-CSRFToken')
         # save csv file to path /dataset/
 
         if csrf_token:
+            if request.method == 'POST':
+                # file = FileUpload(csv_file=request.FILES["csv_file"])
+                # file.save()
+                file_obj = request.FILES.get('csv_file')
+                print('File Name:', file_obj.name)
+                print('File Size:', file_obj.size)
+                
+            else:
+                return JsonResponse({'error': 'No file provided in the request.'}, status=400)                
             # filename = 'path/to/csv'
             # df = pd.read_csv(filename)
             # print(f"df rows ===> {df.shape[0]} df columns ===> {df.shape[1]}")
             
-            return JsonResponse({'message': 'File uploaded successfully!'})
         else:
             return JsonResponse({'error': 'CSRF token not found in headers'})
