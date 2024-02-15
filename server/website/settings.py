@@ -169,7 +169,7 @@ USE_TZ = True
 STATIC_URL = 'static/'
 MEDIA_URL = '/datasets/'
 MEDIA_ROOT = os.path.join(BASE_DIR, 'datasets')
-print("base dir", BASE_DIR)
+print("base dir", os.path.join(BASE_DIR, 'datasets'))
 
 # Default primary key field type
 # https://docs.djangoproject.com/en/5.0/ref/settings/#default-auto-field

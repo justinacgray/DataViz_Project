@@ -8,7 +8,7 @@ import SearchBar from '../components/SearchBar';
 import TestChart from '../components/TestChart';
 
 const Dashboard = () => {
-  const token = CsrfToken('csrftoken');
+  const token = CsrfToken('XCSRF-TOKEN');
   console.log('CSRF Token:', token);
 
   const [file, setFile] = useState('')
@@ -17,7 +17,8 @@ const Dashboard = () => {
   useEffect(() => {
     const getCSRFToken = async () => {
       try {
-        const response = await axios.get('/api/get_token');
+        const response = await axios.get('/api/get_csrf/');
+        console.log("resp", response)
         const csrfToken = response.data.CSRFToken;
 
         // Set the CSRF token in the headers for subsequent requests
@@ -35,7 +36,7 @@ const Dashboard = () => {
     
     const url = 'http://localhost:8000/api/dash/'
     const formData = new FormData();
-    formData.append('csv_file', file);
+    formData.append('file', file);
     formData.append('fileName', file.name);
     const config =  {
       withCredentials: true,
@@ -83,12 +84,12 @@ const Dashboard = () => {
 
         {/* Upload form  */}
 
-          <form className="" encType="multipart/form-data" onSubmit={submitForm}>
+          <form className="" onSubmit={submitForm}>
             <section className="">
               <h2 className="">Upload a Spreadsheet</h2>
             </section>
             <div className="relative mb-10">
-              <input className="block w-full p-2 ps-7 text-sm text-gray-800 border border-gray-300 rounded-lg bg-gray-50 focus:ring-blue-500 focus:border-[#c0392b] dark:bg-gray-200 dark:border-gray-600 dark:placeholder-gray-400 dark:text-black dark:focus:ring-gray-500 dark:focus:border-[#c0392b]" name="csv_file"  type="file" placeholder="upload spreadsheet"  onChange={(e) => setFile(e.target.files[0])} />
+              <input className="block w-full p-2 ps-7 text-sm text-gray-800 border border-gray-300 rounded-lg bg-gray-50 focus:ring-blue-500 focus:border-[#c0392b] dark:bg-gray-200 dark:border-gray-600 dark:placeholder-gray-400 dark:text-black dark:focus:ring-gray-500 dark:focus:border-[#c0392b]" name="spreadsheet" type="file" placeholder="upload spreadsheet"  onChange={(e) => setFile(e.target.value)} />
               <button className="text-white absolute end-2 bottom-1.5 bg-[#e74c3c] hover:bg-[#c0392b] focus:ring-1 focus:outline-none focus:ring-gray-700 font-medium rounded-lg text-sm px-2 py-1 dark:bg-[#c0392b] dark:hover:bg-[#e74c3c] dark:focus:ring-white" type="submit" value="upload" > Upload </button>
             </div>
           </form>
