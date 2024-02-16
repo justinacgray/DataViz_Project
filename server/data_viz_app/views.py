@@ -43,8 +43,6 @@ class DataInsights(APIView):
 
             serializer = CSVUploadSerializer(csv_upload)
             return JsonResponse(serializer.data, status=status.HTTP_201_CREATED)
-            # return JsonResponse({'Success': 'Upload Success! .'}, status=200)
-            
         # elif 
         #         return JsonResponse({'error': 'No file provided in the request.'}, status=400)
         else:
