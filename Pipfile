@@ -5,19 +5,16 @@ name = "pypi"
 
 [packages]
 django = "*"
-djangorestframework = "*"
 django-cors-headers = "*"
-psycopg2 = "*"
-python-dotenv = "*"
-dj-database-url = "*"
-pymongo = {extras = ["gssapi", "snappy", "srv", "tls"], version = "*"}
-dnspython = "*"
+djangorestframework = "*"
 djongo = "*"
-pytz = "*"
-pandas = "*"
 numpy = "*"
+pandas = "*"
+pymongo = "==3.12.1"
+python-dotenv = "*"
+pytz = "*"
 
 [dev-packages]
 
 [requires]
-python_version = "3.12"
+python_version = "3.10"

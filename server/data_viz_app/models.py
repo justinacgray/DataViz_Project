@@ -1,9 +1,10 @@
 from djongo import models
 
 # Create your models here.
-class FileUpload(models.Model):
+class CSVUpload(models.Model):
+    _id = models.ObjectIdField()
     file_name = models.CharField(max_length=144)
-    csv_file = models.FileField(upload_to='csv_files/')
+    csv_file = models.FileField(upload_to='csv_files/', blank=False)
     created_at = models.DateTimeField(auto_now_add=True)
     updated_at = models.DateTimeField(auto_now=True)
     

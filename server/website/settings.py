@@ -11,13 +11,15 @@ https://docs.djangoproject.com/en/5.0/ref/settings/
 """
 
 from djongo import models
+from corsheaders.defaults import default_headers
 import os
 from dotenv import load_dotenv
 load_dotenv()
 
 REMOTE_SQL_DB = os.getenv('REMOTE_MONGO')
-USER_NAME = os.getenv('USERNAME')
+USER_NAME = os.getenv('USER_NAME')
 USER_PASS = os.getenv('PASSWORD')
+
 
 
 from pathlib import Path
@@ -48,7 +50,7 @@ INSTALLED_APPS = [
     'django.contrib.messages',
     'django.contrib.staticfiles',
     'rest_framework',
-    'website',
+    'data_viz_app',
     'corsheaders',
 ]
 
@@ -64,13 +66,18 @@ MIDDLEWARE = [
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
 ]
 # 👇 Add this line here
-CORS_ORIGIN_ALLOW_ALL = True
+CORS_ORIGIN_ALLOW_ALL = False
 CORS_ALLOW_CREDENTIALS = True
 CSRF_COOKIE_NAME = "XCSRF-TOKEN"
+CORS_ALLOW_HEADERS = (
+    *default_headers,
+    "Content-Disposition",
+)
 
 CORS_ALLOWED_ORIGINS = [
     "http://127.0.0.1:5173",
     "http://localhost:5173",
+    "http://::1:5173",
 ]
 
 # Rest frameWork for api
@@ -85,6 +92,9 @@ REST_FRAMEWORK = {
     'DEFAULT_AUTHENTICATION_CLASSES': [
         'rest_framework.authentication.BasicAuthentication',
     ],
+    'DEFAULT_PARSER_CLASSES': [
+        'rest_framework.parsers.JSONParser',
+    ]
 }
 
 
@@ -163,9 +173,9 @@ USE_TZ = True
 # https://docs.djangoproject.com/en/5.0/howto/static-files/
 
 STATIC_URL = 'static/'
-DATASET_URL = '/datasets/'
-DATASET_ROOT = os.path.join(BASE_DIR, 'datasets')
-print("base dir", BASE_DIR)
+MEDIA_URL = '/datasets/'
+MEDIA_ROOT = os.path.join(BASE_DIR, 'datasets')
+# print("base dir", os.path.join(BASE_DIR, 'datasets'))
 
 # Default primary key field type
 # https://docs.djangoproject.com/en/5.0/ref/settings/#default-auto-field

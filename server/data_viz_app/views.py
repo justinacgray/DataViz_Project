@@ -1,31 +1,49 @@
 from django.http import JsonResponse
 from django.views.decorators.csrf import csrf_exempt, ensure_csrf_cookie
 from django.middleware.csrf import get_token
+from rest_framework.parsers import FileUploadParser
+from rest_framework.response import Response
+from rest_framework.views import APIView
+from rest_framework import status
+from .models import CSVUpload
+from .serializers import CSVUploadSerializer
 import pandas as pd
 import numpy as np
 
 
-def home(request):
-    # print("request---->", request)
-    # print(type(request))
-    return JsonResponse({'message': 'Shalom Todos!'})
+class DataInsights(APIView):
+    parser_classes = (FileUploadParser,)
+    
+    # def home(self, request):
+    #     # print("request---->", request)
+    #     # print(type(request))
+    #     return JsonResponse({'message': 'Shalom Todos!'})
 
 
-def get_csrf(request):
-    token = get_token(request)
-    return JsonResponse({'csrfToken': token})
+    def get(self, request, *args, **kwargs):
+        token = get_token(request)
+        print("##### token from server ######", token)
+        return JsonResponse({'csrfToken -->': token})
+    
+    
 
+    def post(self, request, *args, **kwargs):
+        print("******* REQuest *******", request.data)        
+            
+        csrf_token = request.headers.get('X-CSRFToken')
+        # save csv file to path /dataset/
+        if csrf_token:
+            file_obj = request.data['file']
+            print('File Name:', file_obj.name)
+            print('File Size:', file_obj.size)
+            
+            # Assuming CSVUpload model has 'file_name' and 'csv_file' fields
+            csv_upload = CSVUpload(file_name=file_obj.name, csv_file=file_obj)
+            csv_upload.save()
 
-@csrf_exempt
-def dash(request, csv):
-    csrf_token = request.headers.get('X-CSRFToken')
-    # save csv file to path /dataset/
-
-    if csrf_token:
-        # filename = 'path/to/csv'
-        # df = pd.read_csv(filename)
-        # print(f"df rows ===> {df.shape[0]} df columns ===> {df.shape[1]}")
-        
-        return JsonResponse({'message': 'File uploaded successfully!'})
-    else:
-        return JsonResponse({'error': 'CSRF token not found in headers'})
+            serializer = CSVUploadSerializer(csv_upload)
+            return JsonResponse(serializer.data, status=status.HTTP_201_CREATED)
+        # elif 
+        #         return JsonResponse({'error': 'No file provided in the request.'}, status=400)
+        else:
+            return JsonResponse({'error': 'CSRF token not found in headers'})
