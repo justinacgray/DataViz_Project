@@ -11,18 +11,24 @@ const Dashboard = () => {
   const token = CsrfToken('XCSRF-TOKEN');
   console.log('CSRF Token:', token);
 
-  const [file, setFile] = useState('')
+  const [file, setFile] = useState({
+    name: '',
+    type: ''
+  })
   const [uploadStatus, setUploadStatus] = useState(null);
+
+  const handleCSVChange = (e) => {
+    setFile(e.target.files[0]);
+};
 
   useEffect(() => {
     const getCSRFToken = async () => {
       try {
         const response = await axios.get('/api/get_csrf/');
-        console.log("resp", response)
         const csrfToken = response.data.CSRFToken;
 
+        console.log("toke toke", csrfToken)
         // Set the CSRF token in the headers for subsequent requests
-        axios.defaults.headers.post['XCSRF-TOKEN'] = csrfToken;
       } catch (error) {
         console.error('Error fetching CSRF token:', error);
       }
@@ -34,22 +40,32 @@ const Dashboard = () => {
   const submitForm = (e) => {
     e.preventDefault();
     
-    const url = 'http://localhost:8000/api/dash/'
+    const url = 'http://localhost:8000/api/upload_csv/'
     const formData = new FormData();
+    formData.append('filename', file.name);
     formData.append('file', file);
-    formData.append('fileName', file.name);
+    console.log("file ---> ", file)
+    axios.defaults.xsrfCookieName = 'csrftoken'
+    axios.defaults.xsrfHeaderName = "XCSRF-TOKEN"
+
+    for (var [key, value] of formData.entries()) { 
+      console.log(key, value);
+    }
+
     const config =  {
       withCredentials: true,
       headers: {
-        'Content-Type': 'multipart/form-data',
         'X-CSRFToken': token,
+        "Content-Type": "multipart/form-data",
+        "Content-Disposition" :  `attachment; filename=${file.name}`
       },
     }
+    console.log("formDAta--- ", formData)
     axios.post(url, formData, config)
     .then((response)=>{
       console.log("RESPONSE---->", response)
     }).catch ((error) => {
-      console.error('Error uploading file:', error);
+      console.error('Error uploading file ========', error);
       setUploadStatus('File upload failed');
       })
   }
@@ -84,12 +100,12 @@ const Dashboard = () => {
 
         {/* Upload form  */}
 
-          <form className="" onSubmit={submitForm}>
+          <form className="" onSubmit={submitForm} encType='multipart/form-data' >
             <section className="">
               <h2 className="">Upload a Spreadsheet</h2>
             </section>
             <div className="relative mb-10">
-              <input className="block w-full p-2 ps-7 text-sm text-gray-800 border border-gray-300 rounded-lg bg-gray-50 focus:ring-blue-500 focus:border-[#c0392b] dark:bg-gray-200 dark:border-gray-600 dark:placeholder-gray-400 dark:text-black dark:focus:ring-gray-500 dark:focus:border-[#c0392b]" name="spreadsheet" type="file" placeholder="upload spreadsheet"  onChange={(e) => setFile(e.target.value)} />
+              <input className="block w-full p-2 ps-7 text-sm text-gray-800 border border-gray-300 rounded-lg bg-gray-50 focus:ring-blue-500 focus:border-[#c0392b] dark:bg-gray-200 dark:border-gray-600 dark:placeholder-gray-400 dark:text-black dark:focus:ring-gray-500 dark:focus:border-[#c0392b]" name="file" type="file" placeholder="upload spreadsheet"  onChange={handleCSVChange} />
               <button className="text-white absolute end-2 bottom-1.5 bg-[#e74c3c] hover:bg-[#c0392b] focus:ring-1 focus:outline-none focus:ring-gray-700 font-medium rounded-lg text-sm px-2 py-1 dark:bg-[#c0392b] dark:hover:bg-[#e74c3c] dark:focus:ring-white" type="submit" value="upload" > Upload </button>
             </div>
           </form>

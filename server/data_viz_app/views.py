@@ -22,25 +22,30 @@ class DataInsights(APIView):
 
     def get(self, request, *args, **kwargs):
         token = get_token(request)
-        print("token from server", token)
+        print("##### token from server ######", token)
         return JsonResponse({'csrfToken -->': token})
+    
+    
 
-    def dash(self, request, *args, **kwargs):
+    def post(self, request, *args, **kwargs):
+        print("******* REQuest *******", request.data)        
+            
         csrf_token = request.headers.get('X-CSRFToken')
         # save csv file to path /dataset/
         if csrf_token:
-            if request.method == 'POST':
-                file_obj = request.data['file']
-                print('File Name:', file_obj.name)
-                print('File Size:', file_obj.size)
-                
-                # Assuming CSVUpload model has 'file_name' and 'csv_file' fields
-                csv_upload = CSVUpload(file_name=file_obj.name, csv_file=file_obj)
-                csv_upload.save()
+            file_obj = request.data['file']
+            print('File Name:', file_obj.name)
+            print('File Size:', file_obj.size)
+            
+            # Assuming CSVUpload model has 'file_name' and 'csv_file' fields
+            csv_upload = CSVUpload(file_name=file_obj.name, csv_file=file_obj)
+            csv_upload.save()
 
-                serializer = CSVUploadSerializer(csv_upload)
-                return Response(serializer.data, status=status.HTTP_201_CREATED)
-            else:
-                return JsonResponse({'error': 'No file provided in the request.'}, status=400)
+            serializer = CSVUploadSerializer(csv_upload)
+            return JsonResponse(serializer.data, status=status.HTTP_201_CREATED)
+            # return JsonResponse({'Success': 'Upload Success! .'}, status=200)
+            
+        # elif 
+        #         return JsonResponse({'error': 'No file provided in the request.'}, status=400)
         else:
             return JsonResponse({'error': 'CSRF token not found in headers'})
