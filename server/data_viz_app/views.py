@@ -1,31 +1,25 @@
 from django.http import JsonResponse
 from django.views.decorators.csrf import csrf_exempt, ensure_csrf_cookie
 from django.middleware.csrf import get_token
-from rest_framework.parsers import FileUploadParser, MultiPartParser, FormParser
+from rest_framework.parsers import MultiPartParser, FormParser
 from rest_framework.response import Response
 from rest_framework.views import APIView
 from rest_framework import status
 from .models import CSVUpload
 from .serializers import CSVUploadSerializer
+from django.conf import settings
 import pandas as pd
 import numpy as np
 
 
+
 class DataInsights(APIView):
     parser_classes = (MultiPartParser, FormParser)
-    
-    # def home(self, request):
-    #     # print("request---->", request)
-    #     # print(type(request))
-    #     return JsonResponse({'message': 'Shalom Todos!'})
-
 
     def get(self, request, *args, **kwargs):
         token = get_token(request)
         print("##### token from server ######", token)
         return JsonResponse({'csrfToken -->': token})
-    
-    
 
     def post(self, request, *args, **kwargs):
         print("******* REQuest.data *******", request.data)        
@@ -40,10 +34,25 @@ class DataInsights(APIView):
             # Assuming CSVUpload model has 'file_name' and 'csv_file' fields
             csv_upload = CSVUpload(file_name=file_obj.name, csv_file=file_obj)
             csv_upload.save()
-
             serializer = CSVUploadSerializer(csv_upload)
-            return JsonResponse(serializer.data, status=status.HTTP_201_CREATED)
-        # elif 
-        #         return JsonResponse({'error': 'No file provided in the request.'}, status=400)
-        else:
-            return JsonResponse({'error': 'CSRF token not found in headers'})
+            print("###### viewsssss path", (f"{settings.MEDIA_URL}datasets/{file_obj.name}"))
+            df = pd.read_csv(f"{settings.MEDIA_ROOT}datasets/{file_obj.name}")
+            output = {
+                'serializer': serializer.data,
+                'df_info' : df.info()
+            }
+            print("SERIALIZER--->", serializer)
+            
+            return Response(output, status=status.HTTP_201_CREATED)
+        elif not csrf_token:
+            return JsonResponse({'error': 'CSRF token not found in headers'}, status=405)
+        else: 
+            return JsonResponse({'error': 'No file provided in the request.'}, status=400)
+        
+
+
+
+def home(self, request):
+    # print("request---->", request)
+    # print(type(request))
+    return JsonResponse({'message': 'Shalom Todos!'})
