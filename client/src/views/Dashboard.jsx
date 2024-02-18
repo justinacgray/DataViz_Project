@@ -37,7 +37,7 @@ const Dashboard = () => {
     
     const url = 'http://localhost:8000/api/upload_csv/'
     const formData = new FormData();
-    formData.append('filename', file);
+    formData.append('file', file);
     console.log("file ---> ", file)
     axios.defaults.xsrfCookieName = 'csrftoken'
     axios.defaults.xsrfHeaderName = "XCSRF-TOKEN"
@@ -46,8 +46,6 @@ const Dashboard = () => {
       withCredentials: true,
       headers: {
         'X-CSRFToken': token,
-        "Content-Type": "multipart/form-data",
-        "Content-Disposition" :  `attachment; filename=${file.name}`
       },
     }
     axios.post(url, formData, config)
