@@ -1,11 +1,3 @@
-------WebKitFormBoundaryPMw5VelEM88Prh01
-Content-Disposition: form-data; name="filename"
-
-majors-list.csv
-------WebKitFormBoundaryPMw5VelEM88Prh01
-Content-Disposition: form-data; name="file"; filename="majors-list.csv"
-Content-Type: text/csv
-
 index,FOD1P,Major,Major_Category
 0,1100,GENERAL AGRICULTURE,Agriculture & Natural Resources
 1,1101,AGRICULTURE PRODUCTION AND MANAGEMENT,Agriculture & Natural Resources
@@ -181,5 +173,3 @@ index,FOD1P,Major,Major_Category
 171,5506,POLITICAL SCIENCE AND GOVERNMENT,Social Science
 172,5507,SOCIOLOGY,Social Science
 173,5599,MISCELLANEOUS SOCIAL SCIENCES,Social Science
-
-------WebKitFormBoundaryPMw5VelEM88Prh01--

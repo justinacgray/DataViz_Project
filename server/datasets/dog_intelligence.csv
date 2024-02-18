@@ -1,8 +1,4 @@
-------WebKitFormBoundaryQz1ZNwTjxDzzgxp8
-Content-Disposition: form-data; name="filename"
-
-dog_intelligence.csv
-------WebKitFormBoundaryQz1ZNwTjxDzzgxp8
+------WebKitFormBoundaryLUwQOT53UZVW56xx
 Content-Disposition: form-data; name="file"; filename="dog_intelligence.csv"
 Content-Type: text/csv
 
@@ -144,4 +140,4 @@ index,Breed,Classification,obey,reps_lower,reps_upper
 134,Basenji,Lowest Degree of Working/Obedience Intelligence ,,81,100
 135,Afghan Hound,Lowest Degree of Working/Obedience Intelligence ,,81,100
 
-------WebKitFormBoundaryQz1ZNwTjxDzzgxp8--
+------WebKitFormBoundaryLUwQOT53UZVW56xx--

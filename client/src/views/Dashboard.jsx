@@ -9,12 +9,9 @@ import TestChart from '../components/TestChart';
 
 const Dashboard = () => {
   const token = CsrfToken('XCSRF-TOKEN');
-  console.log('CSRF Token:', token);
+  console.log('CSRF Token is in Dash:', token);
 
-  const [file, setFile] = useState({
-    name: '',
-    type: ''
-  })
+  const [file, setFile] = useState({})
   const [uploadStatus, setUploadStatus] = useState(null);
 
   const handleCSVChange = (e) => {
@@ -26,8 +23,6 @@ const Dashboard = () => {
       try {
         const response = await axios.get('/api/get_csrf/');
         const csrfToken = response.data.CSRFToken;
-
-        console.log("toke toke", csrfToken)
         // Set the CSRF token in the headers for subsequent requests
       } catch (error) {
         console.error('Error fetching CSRF token:', error);
@@ -42,25 +37,17 @@ const Dashboard = () => {
     
     const url = 'http://localhost:8000/api/upload_csv/'
     const formData = new FormData();
-    formData.append('filename', file.name);
     formData.append('file', file);
     console.log("file ---> ", file)
     axios.defaults.xsrfCookieName = 'csrftoken'
     axios.defaults.xsrfHeaderName = "XCSRF-TOKEN"
 
-    for (var [key, value] of formData.entries()) { 
-      console.log(key, value);
-    }
-
     const config =  {
       withCredentials: true,
       headers: {
         'X-CSRFToken': token,
-        "Content-Type": "multipart/form-data",
-        "Content-Disposition" :  `attachment; filename=${file.name}`
       },
     }
-    console.log("formDAta--- ", formData)
     axios.post(url, formData, config)
     .then((response)=>{
       console.log("RESPONSE---->", response)

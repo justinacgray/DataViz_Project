@@ -31,7 +31,7 @@ const CsrfToken = (name) => {
         // splits the document.cookie string into an array of individual cookies, ';' is the separator 
         // trims each cookie, and finds the one that starts with the specified name.
         const cookies = document.cookie.split(';').map(cookie => cookie.trim());
-        console.log("cookies", cookies)
+        // console.log("cookies", cookies)
 
         const targetCookie = cookies.find(cookie => cookie.startsWith(`${name}=`));
         console.log("targetCookie", targetCookie)

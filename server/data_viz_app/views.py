@@ -1,7 +1,7 @@
 from django.http import JsonResponse
 from django.views.decorators.csrf import csrf_exempt, ensure_csrf_cookie
 from django.middleware.csrf import get_token
-from rest_framework.parsers import FileUploadParser
+from rest_framework.parsers import FileUploadParser, MultiPartParser, FormParser
 from rest_framework.response import Response
 from rest_framework.views import APIView
 from rest_framework import status
@@ -12,7 +12,7 @@ import numpy as np
 
 
 class DataInsights(APIView):
-    parser_classes = (FileUploadParser,)
+    parser_classes = (MultiPartParser, FormParser)
     
     # def home(self, request):
     #     # print("request---->", request)
@@ -28,12 +28,12 @@ class DataInsights(APIView):
     
 
     def post(self, request, *args, **kwargs):
-        print("******* REQuest *******", request.data)        
+        print("******* REQuest.data *******", request.data)        
             
         csrf_token = request.headers.get('X-CSRFToken')
         # save csv file to path /dataset/
         if csrf_token:
-            file_obj = request.data['file']
+            file_obj = self.request.FILES['file']
             print('File Name:', file_obj.name)
             print('File Size:', file_obj.size)
             
