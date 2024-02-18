@@ -1,9 +1,5 @@
-------WebKitFormBoundaryPMw5VelEM88Prh01
-Content-Disposition: form-data; name="filename"
-
-majors-list.csv
-------WebKitFormBoundaryPMw5VelEM88Prh01
-Content-Disposition: form-data; name="file"; filename="majors-list.csv"
+------WebKitFormBoundaryJgRsMRXn50eSuvLA
+Content-Disposition: form-data; name="filename"; filename="majors-list.csv"
 Content-Type: text/csv
 
 index,FOD1P,Major,Major_Category
@@ -182,4 +178,4 @@ index,FOD1P,Major,Major_Category
 172,5507,SOCIOLOGY,Social Science
 173,5599,MISCELLANEOUS SOCIAL SCIENCES,Social Science
 
-------WebKitFormBoundaryPMw5VelEM88Prh01--
+------WebKitFormBoundaryJgRsMRXn50eSuvLA--

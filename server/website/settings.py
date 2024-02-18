@@ -173,8 +173,8 @@ USE_TZ = True
 # https://docs.djangoproject.com/en/5.0/howto/static-files/
 
 STATIC_URL = 'static/'
-MEDIA_URL = '/datasets/'
-MEDIA_ROOT = os.path.join(BASE_DIR, 'datasets')
+MEDIA_URL = '/'
+# MEDIA_ROOT = os.path.join(BASE_DIR, '/')
 # print("base dir", os.path.join(BASE_DIR, 'datasets'))
 
 # Default primary key field type
