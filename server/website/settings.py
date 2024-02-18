@@ -174,8 +174,9 @@ USE_TZ = True
 
 STATIC_URL = 'static/'
 MEDIA_URL = '/'
-# MEDIA_ROOT = os.path.join(BASE_DIR, '/')
-# print("base dir", os.path.join(BASE_DIR, 'datasets'))
+MEDIA_ROOT = os.path.join(BASE_DIR, 'media/') # media path
+print("MEDIA ROOT PATH", os.path.join(BASE_DIR, MEDIA_ROOT))
+print("MEDIA URL dir", os.path.join(BASE_DIR, MEDIA_URL))
 
 # Default primary key field type
 # https://docs.djangoproject.com/en/5.0/ref/settings/#default-auto-field
