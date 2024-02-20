@@ -37,11 +37,20 @@ class DataInsights(APIView):
             serializer = CSVUploadSerializer(csv_upload)
             print("###### viewsssss path", (f"{settings.MEDIA_URL}datasets/{file_obj.name}"))
             df = pd.read_csv(f"{settings.MEDIA_ROOT}datasets/{file_obj.name}")
+            df_info_dict = {
+                'columns': df.columns.tolist(),
+                'data_types': {col: str(dtype) for col, dtype in df.dtypes.items()},
+                'non_null_count': df.count().to_dict(),
+                'info_head' : df.head(10),
+                'df_info': df.info()
+
+                # You can include more information from df.info() as needed
+            }
             output = {
                 'serializer': serializer.data,
-                'df_info' : df.info()
+                'df_info' : df_info_dict
             }
-            print("SERIALIZER--->", serializer)
+            print("SERIALIZER--->", serializer, output)
             
             return Response(output, status=status.HTTP_201_CREATED)
         elif not csrf_token:
