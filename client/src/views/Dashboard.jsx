@@ -7,8 +7,10 @@ import StatCards from '../components/StatCards';
 import SearchBar from '../components/SearchBar';
 import TestChart from '../components/TestChart';
 
+const secretToken = import.meta.env.VITE_SECRET_TOKEN 
+
 const Dashboard = () => {
-  const token = CsrfToken('XCSRF-TOKEN');
+  const token = CsrfToken(secretToken);
   console.log('CSRF Token is in Dash:', token);
 
   const [file, setFile] = useState({})

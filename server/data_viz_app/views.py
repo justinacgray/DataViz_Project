@@ -13,6 +13,12 @@ import numpy as np
 
 
 
+def home(self, request):
+    # print("request---->", request)
+    # print(type(request))
+    return JsonResponse({'message': 'Shalom Todos!'})
+
+
 class DataInsights(APIView):
     parser_classes = (MultiPartParser, FormParser)
 
@@ -31,37 +37,37 @@ class DataInsights(APIView):
             print('File Name:', file_obj.name)
             print('File Size:', file_obj.size)
             
-            # Assuming CSVUpload model has 'file_name' and 'csv_file' fields
-            csv_upload = CSVUpload(file_name=file_obj.name, csv_file=file_obj)
-            csv_upload.save()
+            csv_upload = self.save_csv(file_obj)
             serializer = CSVUploadSerializer(csv_upload)
             print("###### viewsssss path", (f"{settings.MEDIA_URL}datasets/{file_obj.name}"))
-            df = pd.read_csv(f"{settings.MEDIA_ROOT}datasets/{file_obj.name}")
-            df_info_dict = {
-                'columns': df.columns.tolist(),
-                'data_types': {col: str(dtype) for col, dtype in df.dtypes.items()},
-                'non_null_count': df.count().to_dict(),
-                'info_head' : df.head(10),
-                'df_info': df.info()
-
-                # You can include more information from df.info() as needed
-            }
+            df_info_dict = self.data_stats(file_obj)
             output = {
                 'serializer': serializer.data,
                 'df_info' : df_info_dict
             }
             print("SERIALIZER--->", serializer, output)
-            
-            return Response(output, status=status.HTTP_201_CREATED)
+            return JsonResponse(output, status=status.HTTP_201_CREATED)
         elif not csrf_token:
             return JsonResponse({'error': 'CSRF token not found in headers'}, status=405)
         else: 
             return JsonResponse({'error': 'No file provided in the request.'}, status=400)
         
 
+    def save_csv(self, file_obj):
+        csv_upload = CSVUpload(file_name=file_obj.name, csv_file=file_obj)
+        csv_upload.save()
+        return csv_upload
+    
+    def data_stats(self, file_obj):
+        df = pd.read_csv(f"{settings.MEDIA_ROOT}datasets/{file_obj.name}")
+        df_info_dict = {
+            'columns': df.columns.tolist(),
+            'data_types': {col: str(dtype) for col, dtype in df.dtypes.items()},
+            'non_null_count': df.count().to_dict(),
+            'info_head' : df.head(10)
+            # 'df_info': df.info()
+        }
+        return df_info_dict
 
 
-def home(self, request):
-    # print("request---->", request)
-    # print(type(request))
-    return JsonResponse({'message': 'Shalom Todos!'})
+
