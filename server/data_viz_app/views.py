@@ -10,6 +10,7 @@ from .serializers import CSVUploadSerializer
 from django.conf import settings
 import pandas as pd
 import numpy as np
+import json
 
 
 
@@ -45,8 +46,11 @@ class DataInsights(APIView):
                 'serializer': serializer.data,
                 'df_info' : df_info_dict
             }
-            print("SERIALIZER--->", serializer, output)
-            return JsonResponse(output, status=status.HTTP_201_CREATED)
+            print("df info --->", df_info_dict)
+            # json.dumps(serializer.data)
+            # json.dumps(df_info_dict)
+            print("-----dot data", serializer.data)
+            return Response(output, status=status.HTTP_201_CREATED)
         elif not csrf_token:
             return JsonResponse({'error': 'CSRF token not found in headers'}, status=405)
         else: 
@@ -61,9 +65,8 @@ class DataInsights(APIView):
     def data_stats(self, file_obj):
         df = pd.read_csv(f"{settings.MEDIA_ROOT}datasets/{file_obj.name}")
         df_info_dict = {
-            'columns': df.columns.tolist(),
-            'data_types': {col: str(dtype) for col, dtype in df.dtypes.items()},
-            'non_null_count': df.count().to_dict(),
+            'columns': df.columns, 
+            'data_types': df.dtypes,
             'info_head' : df.head(10)
             # 'df_info': df.info()
         }
