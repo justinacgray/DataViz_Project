@@ -27,13 +27,14 @@ const AllCsvs = () => {
         })
     }, [])
 
+    console.log("csvList", csvList)
     return (
         <div>
             AllCSVs
 
-            {csvList.map((csv, idx) => {
-                <p key={idx}>{csv.filename}</p>
-            })}
+            {csvList.map((csv, idx) => (
+                <p key={idx}>{csv.file_name}</p>
+            ))}
         </div>
     )
 }
