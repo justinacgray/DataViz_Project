@@ -10,6 +10,7 @@ urlpatterns = [
     path("get_csrf/", DataInsights.as_view()),
     path("upload_csv/", DataInsights.as_view()),
     path("home/",views.home, name="home"),
+    path("get_all_csvs/", views.get_all_csvs, name = "get_all_csvs")
 ]
 
 

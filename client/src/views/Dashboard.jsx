@@ -6,6 +6,7 @@ import CsrfToken from '../components/CsrfToken';
 import StatCards from '../components/StatCards';
 import SearchBar from '../components/SearchBar';
 import TestChart from '../components/TestChart';
+import AllCsvs from '../components/AllCsvs';
 
 const secretToken = import.meta.env.VITE_SECRET_TOKEN 
 
@@ -25,6 +26,7 @@ const Dashboard = () => {
       try {
         const response = await axios.get('/api/get_csrf/');
         const csrfToken = response.data.CSRFToken;
+        // console.log("RESPONSE from DB", response)
         // Set the CSRF token in the headers for subsequent requests
       } catch (error) {
         console.error('Error fetching CSRF token:', error);
@@ -109,6 +111,7 @@ const Dashboard = () => {
 
         <div className="shadow w-full sm:w-5/12 md:w-5/12 p-10 bg-white dark:bg-gray-700">
           THIS IS JUST DUMMY TEXT
+          <AllCsvs />
         </div>
       </div>
     </>

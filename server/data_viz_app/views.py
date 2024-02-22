@@ -25,7 +25,6 @@ class DataInsights(APIView):
 
     def get(self, request, *args, **kwargs):
         token = get_token(request)
-        print("##### token from server ######", token)
         return JsonResponse({'csrfToken -->': token})
 
     def post(self, request, *args, **kwargs):
@@ -64,13 +63,26 @@ class DataInsights(APIView):
     
     def data_stats(self, file_obj):
         df = pd.read_csv(f"{settings.MEDIA_ROOT}datasets/{file_obj.name}")
+        print('columns',  type(df.columns))
+        print('data_types', type(df.dtypes))
+        print("df_info", type(df.info()))
+        print("df_head", type(df.head()))
         df_info_dict = {
             'columns': df.columns, 
-            'data_types': df.dtypes,
-            'info_head' : df.head(10)
+            # 'data_types': df.dtypes
+            # 'info_head' : df.head(10)
             # 'df_info': df.info()
         }
         return df_info_dict
 
+        
+    
+    def is_csv_uploaded():
+        pass
 
-
+def get_all_csvs(self):
+    all_db_csvs = CSVUpload.objects.all()
+    serializer_csvs = CSVUploadSerializer(all_db_csvs, many=True)
+    print("all DB CVS ---->", all_db_csvs)
+    print("all DB CVS serializer---->", serializer_csvs)
+    return JsonResponse({"csvs" : serializer_csvs.data})
