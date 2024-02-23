@@ -63,14 +63,15 @@ class DataInsights(APIView):
         df = pd.read_csv(f"{settings.MEDIA_ROOT}datasets/{file_obj.name}")
         print('columns',  type(df.columns))
         print('data_types', type(df.dtypes))
-        print("df_info", df.info().to_list())
-        print("df_head", df.head().to_dict())
+        # print("df_info", df.info())
+        # print("df_head", df.head())
+        # df.shape
         
-        df_info_dict = {
+        df_summary_dict = {
             'columns': df.columns, 
             "describe" : df.describe(),
         }
-        return df_info_dict
+        return df_summary_dict
 
         
     
