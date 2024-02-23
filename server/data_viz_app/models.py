@@ -12,4 +12,5 @@ class CSVUpload(models.Model):
         return self.file_name
     
     def __repr__(self) -> str:
-        return f''' ^^^^^^^^^ File ID - {self._id}, File_Name - {self.file_name}, CSV File PATH - {self.csv_file} ^^^^^^^^^'''
+        return f''' ^^^ File ID - {self._id}, File_Name - {self.file_name}, CSV File PATH - {self.csv_file} ^^^^'''
+    

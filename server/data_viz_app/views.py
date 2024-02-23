@@ -46,8 +46,6 @@ class DataInsights(APIView):
                 'df_info' : df_info_dict
             }
             print("df info --->", df_info_dict)
-            # json.dumps(serializer.data)
-            # json.dumps(df_info_dict)
             print("-----dot data", serializer.data)
             return Response(output, status=status.HTTP_201_CREATED)
         elif not csrf_token:
@@ -65,13 +63,12 @@ class DataInsights(APIView):
         df = pd.read_csv(f"{settings.MEDIA_ROOT}datasets/{file_obj.name}")
         print('columns',  type(df.columns))
         print('data_types', type(df.dtypes))
-        print("df_info", type(df.info()))
-        print("df_head", type(df.head()))
+        print("df_info", df.info().to_list())
+        print("df_head", df.head().to_dict())
+        
         df_info_dict = {
             'columns': df.columns, 
-            # 'data_types': df.dtypes
-            # 'info_head' : df.head(10)
-            # 'df_info': df.info()
+            "describe" : df.describe(),
         }
         return df_info_dict
 
@@ -86,3 +83,4 @@ def get_all_csvs(self):
     print("all DB CVS ---->", all_db_csvs)
     print("all DB CVS serializer---->", serializer_csvs)
     return JsonResponse({"csvs" : serializer_csvs.data})
+

@@ -29,13 +29,12 @@ const AllCsvs = () => {
 
     console.log("csvList", csvList)
     return (
-        <div>
-            AllCSVs
-
+        
+        <li>
             {csvList.map((csv, idx) => (
-                <p key={idx}>{csv.file_name}</p>
+                <a key={idx} href="#" className="block px-4 py-2 hover:bg-gray-100 dark:hover:bg-gray-600 dark:hover:text-white">{csv.file_name}</a>
             ))}
-        </div>
+        </li>
     )
 }
 

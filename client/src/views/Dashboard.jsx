@@ -111,7 +111,6 @@ const Dashboard = () => {
 
         <div className="shadow w-full sm:w-5/12 md:w-5/12 p-10 bg-white dark:bg-gray-700">
           THIS IS JUST DUMMY TEXT
-          <AllCsvs />
         </div>
       </div>
     </>
