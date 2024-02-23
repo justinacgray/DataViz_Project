@@ -40,10 +40,17 @@ class DataInsights(APIView):
             csv_upload = self.save_csv(file_obj)
             serializer = CSVUploadSerializer(csv_upload)
             print("###### viewsssss path", (f"{settings.MEDIA_URL}datasets/{file_obj.name}"))
+            df = pd.read_csv(f"{settings.MEDIA_ROOT}datasets/{file_obj.name}")
+            df_info_dict = {
+                'columns': df.columns.tolist(),
+                'data_types': {col: str(dtype) for col, dtype in df.dtypes.items()},
+                'non_null_count': df.count().to_dict(),
+                'info_head' : df.head(10),
+            }
             df_info_dict = self.data_stats(file_obj)
             output = {
                 'serializer': serializer.data,
-                'df_info' : df_info_dict
+                 'df_info' : df_info_dict
             }
             print("df info --->", df_info_dict)
             print("-----dot data", serializer.data)
