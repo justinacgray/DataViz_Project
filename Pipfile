@@ -13,6 +13,7 @@ pandas = "*"
 pymongo = "==3.12.1"
 python-dotenv = "*"
 pytz = "*"
+rest-pandas = "*"
 
 [dev-packages]
 
