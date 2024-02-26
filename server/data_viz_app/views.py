@@ -67,9 +67,13 @@ class DataInsights(APIView):
         # print("df_head", df.head())
         # df.shape
         
+        
         df_summary_dict = {
-            'columns': df.columns, 
+            "columns" : df.columns, 
             "describe" : df.describe(),
+            "info" : df.info(),
+            "missing_values" : df.isna().sum(),
+            "duplicates" : df.duplicated().sum(),
         }
         return df_summary_dict
 
@@ -84,4 +88,18 @@ def get_all_csvs(self):
     print("all DB CVS ---->", all_db_csvs)
     print("all DB CVS serializer---->", serializer_csvs)
     return JsonResponse({"csvs" : serializer_csvs.data})
+
+def cleanStringData(self, df): #change?
+    df = df.replace(r'\r+|\n+|\t+|\(+|\)+|','', regex=True)
+    new_df = pd.DataFrame()
+    for col in df:
+        series = df[col]
+        # check column data type
+        if series.dtype == 'object':
+            series = series.str.strip() #removes leading and trailing spaces
+            # series = series.str.replace(" ", "") #this removes all spaces 
+            new_df[col] = series
+        else:
+            new_df[col] = series
+    return new_df
 
