@@ -1,4 +1,6 @@
 from djongo import models
+from rest_pandas import PandasView, PandasUnstackedSerializer
+
 
 # Create your models here.
 class CSVUpload(models.Model):
@@ -12,5 +14,9 @@ class CSVUpload(models.Model):
         return self.file_name
     
     def __repr__(self) -> str:
-        return f''' ^^^ File ID - {self._id}, File_Name - {self.file_name}, CSV File PATH - {self.csv_file} ^^^^'''
+        return f''' ^^^ File ID - {self._id}, \n
+                        File_Name - {self.file_name}, \n
+                        CSV File PATH - {self.csv_file} ^^^^'''
     
+
+

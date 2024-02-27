@@ -1,13 +1,13 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useContext } from 'react';
 import axios from 'axios';
 import Papa from "papaparse";
 //! Components
 import CsrfToken from '../components/CsrfToken';
 import StatCards from '../components/StatCards';
-import SearchBar from '../components/SearchBar';
 import TestChart from '../components/TestChart';
 import TableData from '../components/TableData';
 import AllCsvs from '../components/AllCsvs';
+import { DataframeContext } from '../context/DataframeContext';
 
 const secretToken = import.meta.env.VITE_SECRET_TOKEN 
 
@@ -18,6 +18,8 @@ const Dashboard = () => {
   const [file, setFile] = useState({})
   const [uploadStatus, setUploadStatus] = useState(null);
   const [parsedFileData, setParsedFileData] = useState([]);
+  
+  const {dataframe, setDataframe} = useContext(DataframeContext)
 
 
   const handleCSVChange = (e) => {
@@ -77,6 +79,7 @@ const Dashboard = () => {
       .then((response) => {
         console.log("RESPONSE---->", response)
         console.log("FileData---->", response.data.df_info)
+        setDataframe(response.data)
         showCsvFile()
 
       }).catch((error) => {
@@ -84,13 +87,14 @@ const Dashboard = () => {
         setUploadStatus('File upload failed');
       })
   }
+  console.log("DF", dataframe)
 
   return (
     <>
       <div className="flex flex-wrap justify-center align-center mx-auto m-10">
-        <div className="w-full sm:w-1/2 md:w-1/4 p-4"><StatCards /></div>
-        <div className="w-full sm:w-1/2 md:w-1/4 p-4"><StatCards /></div>
-        <div className="w-full sm:w-1/2 md:w-1/4 p-4"><StatCards /></div>
+        <div className="w-full sm:w-1/2 md:w-1/4 p-4"><StatCards /> Basic Summary - # of rows/ columns/ duplicates/ missing values</div>
+        <div className="w-full sm:w-1/2 md:w-1/4 p-4"><StatCards /> Describe (mean, medium)</div>
+        <div className="w-full sm:w-1/2 md:w-1/4 p-4"><StatCards /> Data Types</div>
         <div className="w-full sm:w-1/2 md:w-1/4 p-4"><StatCards /></div>
       </div>
 
@@ -105,7 +109,7 @@ const Dashboard = () => {
       {/* SearchBar Component */}
 
       <div className="block mx-auto w-1/2 text-center">
-        <SearchBar />
+        <AllCsvs/>
       </div>
 
       {/* Bottom half of screen */}

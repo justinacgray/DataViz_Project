@@ -5,4 +5,8 @@ class CSVUploadSerializer(serializers.ModelSerializer):
     class Meta:
         model = CSVUpload
         fields = '__all__'
-        
+
+
+class DataFrameSerializer():
+    class Meta:
+        pass
