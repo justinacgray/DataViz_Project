@@ -10,13 +10,11 @@
     "preview": "vite preview"
   },
   "dependencies": {
-    "@preline/dropdown": "^2.0.2",
     "autoprefixer": "^10.4.17",
     "axios": "^1.6.7",
     "chart.js": "^4.4.1",
     "papaparse": "^5.4.1",
     "postcss": "^8.4.35",
-    "preline": "^2.0.3",
     "react": "^18.2.0",
     "react-chartjs-2": "^5.2.0",
     "react-dom": "^18.2.0"
