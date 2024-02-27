@@ -4,7 +4,6 @@ import Papa from "papaparse";
 //! Components
 import CsrfToken from '../components/CsrfToken';
 import StatCards from '../components/StatCards';
-import SearchBar from '../components/SearchBar';
 import TestChart from '../components/TestChart';
 import TableData from '../components/TableData';
 import AllCsvs from '../components/AllCsvs';
@@ -110,7 +109,7 @@ const Dashboard = () => {
       {/* SearchBar Component */}
 
       <div className="block mx-auto w-1/2 text-center">
-        <SearchBar />
+        <AllCsvs/>
       </div>
 
       {/* Bottom half of screen */}
