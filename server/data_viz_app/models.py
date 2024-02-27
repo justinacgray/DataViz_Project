@@ -19,12 +19,4 @@ class CSVUpload(models.Model):
                         CSV File PATH - {self.csv_file} ^^^^'''
     
 
-class DataFrame(models.Model):
-    _id = models.ObjectIdField()
-    # object = 
-    created_at = models.DateTimeField(auto_now_add=True)
-    updated_at = models.DateTimeField(auto_now=True)
-    
-
-
 
