@@ -69,24 +69,43 @@ class DataInsights(APIView):
         df = pd.read_csv(f"{settings.MEDIA_ROOT}datasets/{file_obj.name}")
         print('columns',  type(df.columns))
         print('data_types', type(df.dtypes))
-        # print("df_info", df.info().to_list())
-        # print("df_head", df.head().to_dict())
-        
-        df_info_dict = {
-            'columns': df.columns, 
-            "describe" : df.describe(),
-        }
-        return df_info_dict
 
-        
-    
+        df_summary_dict = {
+            "columns" : df.columns, 
+            "describe" : df.describe(),
+            "missing_values" : df.isna().sum(),
+            "duplicates" : df.duplicated().sum(),
+            "shape" : df.shape,
+            "data_types": {col: str(dtype) for col, dtype in df.dtypes.items()}
+        }
+        return df_summary_dict
+
     def is_csv_uploaded():
         pass
 
-def get_all_csvs(self):
+
+    def cleanDataframe():
+        pass
+        
+
+    def cleanStringData(self, df): #change?
+        df = df.replace(r'\r+|\n+|\t+|\(+|\)+|','', regex=True)
+        new_df = pd.DataFrame()
+        for col in df:
+            series = df[col]
+            # check column data type
+            if series.dtype == 'object':
+                series = series.str.strip() #removes leading and trailing spaces
+                # series = series.str.replace(" ", "") #this removes all spaces 
+                new_df[col] = series
+            else:
+                new_df[col] = series
+        return new_df
+
+
+def get_all_csvs(request):
     all_db_csvs = CSVUpload.objects.all()
     serializer_csvs = CSVUploadSerializer(all_db_csvs, many=True)
     print("all DB CVS ---->", all_db_csvs)
     print("all DB CVS serializer---->", serializer_csvs)
     return JsonResponse({"csvs" : serializer_csvs.data})
-
