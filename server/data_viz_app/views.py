@@ -22,10 +22,10 @@ def home(self, request):
 
 class DataInsights(APIView):
     parser_classes = (MultiPartParser, FormParser)
-
+    
     def get(self, request, *args, **kwargs):
         token = get_token(request)
-        return JsonResponse({'csrfToken -->': token})
+        return JsonResponse({'csrfToken': token})
 
     def post(self, request, *args, **kwargs):
         print("******* REQuest.data *******", request.data)        

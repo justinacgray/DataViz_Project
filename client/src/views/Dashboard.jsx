@@ -47,9 +47,9 @@ const Dashboard = () => {
   useEffect(() => {
     const getCSRFToken = async () => {
       try {
-        const response = await axios.get('/api/get_csrf/');
+        const response = await axios.get('http://localhost:8000/api/get_csrf/', {withCredentials: true});
         const csrfToken = response.data.CSRFToken;
-        // console.log("RESPONSE from DB", response)
+        console.log("RESPONSE from DB", response)
         // Set the CSRF token in the headers for subsequent requests
       } catch (error) {
         console.error('Error fetching CSRF token:', error);
