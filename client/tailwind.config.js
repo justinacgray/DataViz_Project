@@ -7,7 +7,7 @@ module.exports = {
     './src/**/*.js',
     './public/**/*.html',
     './public/**/*.js',
-    './node_modules/preline/dist/*.js'
+
   ],
   
   theme: {
@@ -22,6 +22,6 @@ module.exports = {
     },
   },
   plugins: [
-    require('preline/plugin'),
+  
   ],
   }
