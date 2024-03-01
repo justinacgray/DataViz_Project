@@ -2,7 +2,7 @@ import React, { useState, useEffect, useContext } from 'react';
 import axios from 'axios';
 import Papa from "papaparse";
 //! Components
-import CsrfToken from '../components/CsrfToken';
+// import CsrfToken from '../components/CsrfToken';
 import StatCards from '../components/StatCards';
 import TestChart from '../components/TestChart';
 import TableData from '../components/TableData';
@@ -12,8 +12,9 @@ import { DataframeContext } from '../context/DataframeContext';
 const secretToken = import.meta.env.VITE_SECRET_TOKEN 
 
 const Dashboard = () => {
-  const token = CsrfToken(secretToken);
-  console.log('CSRF Token is in Dash:', token);
+  // const token = CsrfToken(secretToken);
+  // console.log('CSRF Token is in Dash:', token);
+  const [cookieValue, setCookieValue] = useState(null)
 
   const [file, setFile] = useState({})
   const [uploadStatus, setUploadStatus] = useState(null);
@@ -48,8 +49,9 @@ const Dashboard = () => {
     const getCSRFToken = async () => {
       try {
         const response = await axios.get('http://localhost:8000/api/get_csrf/', {withCredentials: true});
-        const csrfToken = response.data.CSRFToken;
-        console.log("RESPONSE from DB", response.data.CSRFToken)
+        const newCsrfToken = response.data.csrfToken;
+        setCookieValue(newCsrfToken)
+        console.log("RESPONSE from DB", response.data.csrfToken)
         // Set the CSRF token in the headers for subsequent requests
       } catch (error) {
         console.error('Error fetching CSRF token:', error);
@@ -72,7 +74,7 @@ const Dashboard = () => {
     const config = {
       withCredentials: true,
       headers: {
-        'X-CSRFToken': token,
+        'X-CSRFToken': cookieValue,
       },
     }
     axios.post(url, formData, config)
