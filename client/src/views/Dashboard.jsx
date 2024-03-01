@@ -8,19 +8,18 @@ import TestChart from '../components/TestChart';
 import TableData from '../components/TableData';
 import AllCsvs from '../components/AllCsvs';
 import { DataframeContext } from '../context/DataframeContext';
+import {CsrfContext} from '../context/CsrfContext'
 
 const secretToken = import.meta.env.VITE_SECRET_TOKEN 
 
 const Dashboard = () => {
-  // const token = CsrfToken(secretToken);
-  // console.log('CSRF Token is in Dash:', token);
-  const [cookieValue, setCookieValue] = useState(null)
 
   const [file, setFile] = useState({})
   const [uploadStatus, setUploadStatus] = useState(null);
   const [parsedFileData, setParsedFileData] = useState([]);
   
   const {dataframe, setDataframe} = useContext(DataframeContext)
+  const {csrfToken, setCsrfToken} = useContext(CsrfContext)
 
 
   const handleCSVChange = (e) => {
@@ -45,21 +44,6 @@ const Dashboard = () => {
     console.log('Values:', each_value);
   };
 
-  useEffect(() => {
-    const getCSRFToken = async () => {
-      try {
-        const response = await axios.get('http://localhost:8000/api/get_csrf/', {withCredentials: true});
-        const newCsrfToken = response.data.csrfToken;
-        setCookieValue(newCsrfToken)
-        console.log("RESPONSE from DB", response.data.csrfToken)
-        // Set the CSRF token in the headers for subsequent requests
-      } catch (error) {
-        console.error('Error fetching CSRF token:', error);
-      }
-    };
-
-    getCSRFToken();
-  }, []);
 
   const submitForm = (e) => {
     e.preventDefault();
@@ -74,7 +58,7 @@ const Dashboard = () => {
     const config = {
       withCredentials: true,
       headers: {
-        'X-CSRFToken': cookieValue,
+        'X-CSRFToken' : csrfToken,
       },
     }
     axios.post(url, formData, config)
