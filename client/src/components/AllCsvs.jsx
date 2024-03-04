@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react'
 import axios from 'axios';
-import CsrfToken from './CsrfToken';
+import CsrfToken from '../utils/CsrfToken';
 
 const secretToken = import.meta.env.VITE_SECRET_TOKEN
 
