@@ -2,12 +2,12 @@ import React from 'react'
 import ReactDOM from 'react-dom/client'
 import App from './App.jsx'
 import './index.css'
-import { DataframeProvider } from './context/DataframeContext.jsx'
+import {CsrfProvider } from './context/CsrfContext'
 
 ReactDOM.createRoot(document.getElementById('root')).render(
   <React.StrictMode>
-    <DataframeProvider>
-    <App />
-    </DataframeProvider>
+    <CsrfProvider>
+      <App />
+    </CsrfProvider>
   </React.StrictMode>,
 )

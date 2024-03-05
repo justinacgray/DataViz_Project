@@ -1,12 +1,17 @@
-import React, { useState, useEffect } from 'react'
+import React, { useState, useEffect, useContext } from 'react'
 import axios from 'axios';
-import CsrfToken from '../utils/CsrfToken';
+import { CsrfContext } from '../context/CsrfContext';
 
-const secretToken = import.meta.env.VITE_SECRET_TOKEN
+
+// const secretToken = import.meta.env.VITE_SECRET_TOKEN
+
+// todo: need to lift state or put in context 
+// should it be on App level instead? where to move it? determine hierarchy 
 
 
 const AllCsvs = () => {
-    const token = CsrfToken(secretToken);
+    const {csrfToken, setCsrfToken} = useContext(CsrfContext)
+    
     const [csvList, setCsvList] = useState([])
 
     useEffect(() => {
@@ -14,7 +19,7 @@ const AllCsvs = () => {
         const config = {
             withCredentials: true,
             headers: {
-                'X-CSRFToken': token,
+                'X-CSRFToken': csrfToken,
             },
         }
         axios.get(url, config)
@@ -35,7 +40,7 @@ const AllCsvs = () => {
                     <svg className="fill-current h-4 w-4" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20"><path d="M9.293 12.95l.707.707L15.657 8l-1.414-1.414L10 10.828 5.757 6.586 4.343 8z" /> </svg>
                 </button>
                 <ul className="dropdown-menu absolute hidden text-gray-100 pt-1">
-                    <li clasName="">
+                    <li className="">
                         {csvList.map((csv, idx) => (
                             <a key={idx} href="#" className="rounded-t bg-gray-700 hover:bg-gray-500 py-2 px-4 block whitespace-no-wrap">{csv.file_name}</a>
                         ))}
