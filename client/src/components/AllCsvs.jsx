@@ -1,12 +1,16 @@
-import React, { useState, useEffect } from 'react'
+import React, { useState, useEffect, useContext } from 'react'
 import axios from 'axios';
-import CsrfToken from './CsrfToken';
+import { CsrfContext } from '../context/CsrfContext';
 
-const secretToken = import.meta.env.VITE_SECRET_TOKEN
+// const secretToken = import.meta.env.VITE_SECRET_TOKEN
+
+// todo: need to lift state or put in context 
+// should it be on App level instead? where to move it? determine hierarchy 
 
 
 const AllCsvs = () => {
-    const token = CsrfToken(secretToken);
+    const {csrfToken, setCsrfToken} = useContext(CsrfContext)
+    
     const [csvList, setCsvList] = useState([])
 
     useEffect(() => {
@@ -14,7 +18,7 @@ const AllCsvs = () => {
         const config = {
             withCredentials: true,
             headers: {
-                'X-CSRFToken': token,
+                'X-CSRFToken': csrfToken,
             },
         }
         axios.get(url, config)
