@@ -9,12 +9,13 @@ import AllCsvs from '../components/AllCsvs';
 import UploadCsvForm from '../components/UploadCsvForm';
 import { DataframeContext } from '../context/DataframeContext';
 import StatCardsData from '../utils/StatCardsData';
-
+import { CsrfContext } from '../context/CsrfContext';
 
 // const secretToken = import.meta.env.VITE_SECRET_TOKEN 
 
 const Dashboard = () => {
   const {csrfToken, setCsrfToken} = useContext(CsrfContext)
+  const {dataframe} = useContext(DataframeContext)
   console.log('CSRF Token is in Dash:', csrfToken);
   const { parsedFileData, setParsedFileData } = useContext(DataframeContext)
  
