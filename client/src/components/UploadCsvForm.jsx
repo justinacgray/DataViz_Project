@@ -1,23 +1,19 @@
 import React, { useState, useEffect, useContext } from 'react';
 import axios from 'axios';
 import * as Yup from "yup";
-import { CsrfTokenContext } from '../context/CsrfTokenContext';
-import { DataProcessContext } from '../context/DataProcessContext';
+import { CsrfContext } from '../context/CsrfContext';
+import { DataframeContext } from '../context/DataframeContext';
 import Papa from "papaparse";
-
-
-
 
 const UploadCsvForm = () => {
     
-    console.log('CSRF Token is in Dash:', token);
+    const { dataframe, setDataframe, parsedFileData, setParsedFileData } = useContext(DataframeContext)
+    const {csrfToken, setCsrfToken} = useContext(CsrfContext)
+    console.log('CSRF Token is in Form:', csrfToken);
+
     
-
-    const { dataframe, setDataframe, file, setFile, parsedFileData, setParsedFileData, uploadStatus, setUploadStatus } = useContext(DataProcessContext)
-
-    const {cookieValue} = useContext(CsrfTokenContext)
-
-    console.log("cookieValue ==>", cookieValue)
+    const [file, setFile] = useState({})
+    const [uploadStatus, setUploadStatus] = useState(null);
 
     const handleCSVChange = (e) => {
         setFile(e.target.files[0]);
@@ -38,10 +34,6 @@ const UploadCsvForm = () => {
         },
         );
     }
-
- 
-
-
     const submitForm = (e) => {
         e.preventDefault();
         // todo had frontend validations 
@@ -56,7 +48,7 @@ const UploadCsvForm = () => {
         const config = {
             withCredentials: true,
             headers: {
-                'X-CSRFToken': cookieValue,
+                'X-CSRFToken': csrfToken,
             },
         }
         axios.post(url, formData, config)
@@ -76,6 +68,7 @@ const UploadCsvForm = () => {
 
 
     return (
+        <>
         <form className="" onSubmit={submitForm} encType='multipart/form-data' >
             <section className="">
                 <h2 className="">Upload a Spreadsheet</h2>
@@ -85,6 +78,8 @@ const UploadCsvForm = () => {
                 <button className="text-white absolute end-2 bottom-1.5 bg-[#e74c3c] hover:bg-[#c0392b] focus:ring-1 focus:outline-none focus:ring-gray-700 font-medium rounded-lg text-sm px-2 py-1 dark:bg-[#c0392b] dark:hover:bg-[#e74c3c] dark:focus:ring-white" type="submit" value="upload" > Upload </button>
             </div>
         </form>
+        {uploadStatus && <p>{uploadStatus}</p>}
+        </>
     )
 }
 

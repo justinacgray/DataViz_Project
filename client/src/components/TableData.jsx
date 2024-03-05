@@ -2,7 +2,7 @@ import React, { useState, useEffect } from 'react'
 import "../Table.css"
 
 
-const TableData = ({ parsedFileData, processData }) => {
+const TableData = ({ parsedFileData }) => {
 
     const [tableRows, setTableRows] = useState([]);
     const [tableValues, setTableValues] = useState([]);
@@ -19,9 +19,8 @@ const TableData = ({ parsedFileData, processData }) => {
             setTableRows(each_row[0]);
             setTableValues(each_value);
 
-            processData(each_row, each_value);
         }
-    }, [parsedFileData, processData]);
+    }, [parsedFileData ]);
 
     
 
