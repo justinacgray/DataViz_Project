@@ -22,6 +22,7 @@ node_modules
 dist
 dist-ssr
 *.local
+src/utils/CsrfToken.jsx
 
 # Editor directories and files
 .vscode/*

@@ -8,7 +8,7 @@ import TableData from '../components/TableData';
 import AllCsvs from '../components/AllCsvs';
 import UploadCsvForm from '../components/UploadCsvForm';
 import { DataframeContext } from '../context/DataframeContext';
-import { CsrfContext } from '../context/CsrfContext';
+import StatCardsData from '../utils/StatCardsData';
 
 
 // const secretToken = import.meta.env.VITE_SECRET_TOKEN 
@@ -21,10 +21,12 @@ const Dashboard = () => {
   return (
     <>
       <div className="flex flex-wrap justify-center align-center mx-auto m-10">
-        <div className="w-full sm:w-1/2 md:w-1/4 p-4"><StatCards /> Basic Summary - # of rows/ columns/ duplicates/ missing values</div>
-        <div className="w-full sm:w-1/2 md:w-1/4 p-4"><StatCards /> Describe (mean, medium)</div>
+        <div className="">
+          <StatCardsData dataframe={dataframe}/> Basic Summary - # of rows/ columns/ duplicates/ missing values
+        </div>
+        {/* <div className="w-full sm:w-1/2 md:w-1/4 p-4"><StatCards /> Describe (mean, medium)</div>
         <div className="w-full sm:w-1/2 md:w-1/4 p-4"><StatCards /> Data Types</div>
-        <div className="w-full sm:w-1/2 md:w-1/4 p-4"><StatCards /></div>
+        <div className="w-full sm:w-1/2 md:w-1/4 p-4"><StatCards /></div> */}
       </div>
 
       {/* the divider after the top cards */}
