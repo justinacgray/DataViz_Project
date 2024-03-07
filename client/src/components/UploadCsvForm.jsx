@@ -19,6 +19,19 @@ const UploadCsvForm = () => {
         setFile(e.target.files[0]);
     };
 
+    useEffect(() => {
+        const storedFormData = localStorage.getItem('formData');
+        const storedParsedFileData = localStorage.getItem('parsedFileData');
+        
+        if (storedFormData && storedParsedFileData) {
+            const parsedFormData = JSON.parse(storedFormData);
+            const parsedParsedFileData = JSON.parse(storedParsedFileData);
+    
+            setDataframe(parsedFormData);
+            setParsedFileData(parsedParsedFileData); 
+        }
+    }, []);
+
     const schema = Yup.object().shape({
         file: Yup.mixed().required('CSV file is required'),
     });
@@ -29,6 +42,7 @@ const UploadCsvForm = () => {
             skipEmptyLines: false,
             complete: function (results) {
                 setParsedFileData(results.data)
+                localStorage.setItem('parsedFileData', JSON.stringify(results.data));
                 console.log("PAPAPARSE----->", results.data)
             },
         },
@@ -56,6 +70,7 @@ const UploadCsvForm = () => {
                 console.log("RESPONSE---->", response)
                 console.log("FileData---->", response.data.df_info)
                 setDataframe(response.data)
+                localStorage.setItem('formData', JSON.stringify(response.data));
                 setUploadStatus('File Uploaded Successfully')
                 showCsvFile()
 

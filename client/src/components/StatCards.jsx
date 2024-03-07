@@ -19,7 +19,7 @@ const StatCards = ({ title, data }) => {
                     {title && <h5 className="mb-2 text-2xl font-bold tracking-tight text-gray-900 dark:text-white">{title}</h5>}
                     {Object.entries(data).map(([key, value]) => (
                         <div key={key}>
-                            <p className="font-semibold text-gray-700 dark:text-gray-300">{key}</p>
+                            <span className="font-semibold text-gray-700 dark:text-gray-300">{key}</span>
                             {Array.isArray(value) ? (
                                 <ul className="list-disc ml-6">
                                     {value.map((item, index) => (
@@ -30,13 +30,13 @@ const StatCards = ({ title, data }) => {
                                 <div className="ml-6">
                                     {Object.entries(value).map(([subKey, subValue], idx) => (
                                         <div key={idx}>
-                                            <p className="font-semibold text-sm text-gray-700 dark:text-gray-300">{subKey}:</p>
+                                            <span className="font-semibold text-sm text-gray-700 dark:text-gray-300">{subKey}:</span>
                                             {Array.isArray(subValue) ? (
-                                                <ul className="list-disc ml-6">
+                                                <span className="ml-2">
                                                     {subValue.map((item, idx) => (
-                                                        <li key={idx}>{item}</li>
+                                                        <span key={idx}>{item}</span>
                                                     ))}
-                                                </ul>
+                                                </span>
                                             ) : (
                                                 <p className="font-normal text-sm text-gray-700 dark:text-gray-400 ml-6">{subValue}</p>
                                             )}
