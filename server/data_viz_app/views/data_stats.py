@@ -1,16 +1,14 @@
 from django.http import JsonResponse
-from django.views.decorators.csrf import csrf_exempt, ensure_csrf_cookie
 from django.middleware.csrf import get_token
 from rest_framework.parsers import MultiPartParser, FormParser
 from rest_framework.response import Response
 from rest_framework.views import APIView
 from rest_framework import status
-from .models import CSVUpload
-from .serializers import CSVUploadSerializer
+from ..models import CSVUpload
+from ..serializers import CSVUploadSerializer
 from django.conf import settings
 import pandas as pd
 import numpy as np
-import json
 
 
 
@@ -80,27 +78,9 @@ class DataInsights(APIView):
         }
         return df_summary_dict
 
+    # validation 
     def is_csv_uploaded():
         pass
-
-
-    def cleanDataframe():
-        pass
-        
-
-    def cleanStringData(self, df): #change?
-        df = df.replace(r'\r+|\n+|\t+|\(+|\)+|','', regex=True)
-        new_df = pd.DataFrame()
-        for col in df:
-            series = df[col]
-            # check column data type
-            if series.dtype == 'object':
-                series = series.str.strip() #removes leading and trailing spaces
-                # series = series.str.replace(" ", "") #this removes all spaces 
-                new_df[col] = series
-            else:
-                new_df[col] = series
-        return new_df
 
 
 def get_all_csvs(request):

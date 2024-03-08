@@ -1,5 +1,5 @@
 from rest_framework import serializers
-from .models import CSVUpload
+from .models import CSVUpload, FunctionName
 
 class CSVUploadSerializer(serializers.ModelSerializer):
     class Meta:
@@ -7,6 +7,8 @@ class CSVUploadSerializer(serializers.ModelSerializer):
         fields = '__all__'
 
 
-class DataFrameSerializer():
+class FunctionNameSerializer():
     class Meta:
-        pass
+        model = FunctionName
+        fields = '__all__'
+    

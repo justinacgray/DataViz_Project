@@ -8,6 +8,7 @@ import UploadCsvForm from '../components/UploadCsvForm';
 import { DataframeContext } from '../context/DataframeContext';
 import StatCardsData from '../utils/StatCardsData';
 import { CsrfContext } from '../context/CsrfContext';
+import DataAnalysisForm from '../components/DataAnalysisForm'
 
 // const secretToken = import.meta.env.VITE_SECRET_TOKEN 
 
@@ -44,8 +45,7 @@ const Dashboard = () => {
           {/* Upload form  */}
           <UploadCsvForm />
 
-          {/* chart component */}
-          <TestChart />
+          <DataAnalysisForm />
         </div>
         
         {/* right side div for visual of form  */}

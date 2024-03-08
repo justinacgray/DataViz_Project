@@ -32,6 +32,7 @@ const UploadCsvForm = () => {
         }
     }, []);
 
+    //! need validations if no file uploaded
     const schema = Yup.object().shape({
         file: Yup.mixed().required('CSV file is required'),
     });

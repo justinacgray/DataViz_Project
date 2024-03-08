@@ -19,4 +19,11 @@ class CSVUpload(models.Model):
                         CSV File PATH - {self.csv_file} ^^^^'''
     
 
+class FunctionName(models.Model):
+    _id = models.ObjectIdField()
+    function_name = models.CharField(max_length=(144))
+    created_at = models.DateTimeField(auto_now_add=True)
+    updated_at = models.DateTimeField(auto_now=True)
 
+    def __repr__(self) -> str:
+        return f'''FunctionName ID {self._id}  and name {self.function_name}'''
