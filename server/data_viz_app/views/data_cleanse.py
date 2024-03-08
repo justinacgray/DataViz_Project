@@ -1,11 +1,24 @@
 import pandas as pd
 import numpy as np
-from ..models import FunctionNames
+from ..models import FunctionName
+from ..serializers import FunctionNameSerializer
+from rest_framework.response import Response
+from rest_framework import status
+from django.views.decorators.csrf import csrf_protect, csrf_exempt
 
 
-def create_function_name(self):
-    pass
-
+@csrf_exempt
+def create_function_name(self, request):
+    data = {
+        'function_name' : request.data.function_name
+    }
+    serializer = FunctionNameSerializer(data=data)
+    #todo validate data
+    # if serializer.is_valid()
+    serializer.save()
+    return Response(serializer.data, status=status.HTTP_201_CREATED)
+    # return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
+    
 def get_all_function_names():
     pass
 
@@ -34,3 +47,7 @@ def cleanStringData(self, df): #change?
         else:
             new_df[col] = series
     return new_df
+
+
+def is_valid():
+    pass

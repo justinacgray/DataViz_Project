@@ -1,11 +1,11 @@
 from djongo import models
 from rest_pandas import PandasView, PandasUnstackedSerializer
-
+from django.core.validators import MinLengthValidator
 
 # Create your models here.
 class CSVUpload(models.Model):
     _id = models.ObjectIdField()
-    file_name = models.CharField(max_length=144)
+    file_name = models.CharField(max_length=144, validators=[MinLengthValidator(4)], blank=False, help_text='Length has to between 4 - 144 characters')
     csv_file = models.FileField(upload_to='datasets/', blank=False)
     created_at = models.DateTimeField(auto_now_add=True)
     updated_at = models.DateTimeField(auto_now=True)
@@ -21,7 +21,7 @@ class CSVUpload(models.Model):
 
 class FunctionName(models.Model):
     _id = models.ObjectIdField()
-    function_name = models.CharField(max_length=(144))
+    function_name = models.CharField(max_length=144, validators=[MinLengthValidator(4)], blank=False, help_text='Length has to between 4 - 144 characters' )
     created_at = models.DateTimeField(auto_now_add=True)
     updated_at = models.DateTimeField(auto_now=True)
 
