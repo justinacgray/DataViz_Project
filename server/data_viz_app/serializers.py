@@ -7,7 +7,7 @@ class CSVUploadSerializer(serializers.ModelSerializer):
         fields = '__all__'
 
 
-class FunctionNameSerializer():
+class FunctionNameSerializer(serializers.ModelSerializer):
     class Meta:
         model = FunctionName
         fields = '__all__'

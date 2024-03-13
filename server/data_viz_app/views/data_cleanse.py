@@ -4,21 +4,23 @@ from ..models import FunctionName
 from ..serializers import FunctionNameSerializer
 from rest_framework.response import Response
 from rest_framework import status
+from rest_framework.decorators import api_view
 from django.views.decorators.csrf import csrf_protect, csrf_exempt
 
 
-@csrf_exempt
-def create_function_name(self, request):
-    data = {
-        'function_name' : request.data.function_name
-    }
-    serializer = FunctionNameSerializer(data=data)
+@api_view(['POST'])
+def create_function_name(request):
+    print("### REQUEST ### ", request)
+    print("### REQUEST DATA ### ", request.data)
+
+    serializer = FunctionNameSerializer(data=request.data)
     #todo validate data
-    # if serializer.is_valid()
-    serializer.save()
-    return Response(serializer.data, status=status.HTTP_201_CREATED)
-    # return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
+    if serializer.is_valid():
+        serializer.save()
+        return Response(serializer.data, status=status.HTTP_201_CREATED)
+    return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
     
+@api_view(['GET'])
 def get_all_function_names():
     pass
 
