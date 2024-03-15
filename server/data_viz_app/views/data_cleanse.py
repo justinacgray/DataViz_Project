@@ -1,3 +1,4 @@
+from django.http import JsonResponse
 import pandas as pd
 import numpy as np
 from ..models import FunctionName
@@ -22,11 +23,17 @@ def create_function_name(request):
     
 @api_view(['GET'])
 def get_all_function_names():
-    pass
+    # ! not testeds
+    all_ds_functions = FunctionName.objects.all()
+    serializer_ds_functions = FunctionNameSerializer(all_ds_functions, many=True)
+    print("**function names **", all_ds_functions)
+    print("**function names serialized **", serializer_ds_functions)
+    return JsonResponse({"function_names" : serializer_ds_functions.data})
 
 
 
-def cleanDataframe():
+
+def sanitize_data():
     # conditionals
     #! if function name is called match to function in file
     
@@ -36,7 +43,7 @@ def cleanDataframe():
     
 
 # removes extra spaces, tabs, new lines, returns
-def cleanStringData(self, df): #change?
+def remove_spaces(self, df): #change?
     df = df.replace(r'\r+|\n+|\t+|\(+|\)+|','', regex=True)
     new_df = pd.DataFrame()
     for col in df:
