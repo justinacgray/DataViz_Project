@@ -22,8 +22,7 @@ def create_function_name(request):
     return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
     
 @api_view(['GET'])
-def get_all_function_names():
-    # ! not testeds
+def get_all_function_names(request):
     all_ds_functions = FunctionName.objects.all()
     serializer_ds_functions = FunctionNameSerializer(all_ds_functions, many=True)
     print("**function names **", all_ds_functions)
