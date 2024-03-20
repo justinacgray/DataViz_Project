@@ -20,36 +20,36 @@ const Dashboard = () => {
 
   return (
     <>
-      <div className="flex flex-wrap justify-center align-center mx-auto m-10">
+      <div className="flex flex-wrap justify-center m-10 mx-auto align-center">
         <div className="">
           <StatCardsData dataframe={dataframe} />
         </div>
       </div>
 
       {/* the divider after the top cards */}
-      <div className="relative flex py-5 items-center">
+      <div className="relative flex items-center py-5">
         <div className="flex-grow border-t border-gray-400 dark:border-gray-200"></div>
         <span className="flex-shrink mx-4 text-gray-400 dark:text-white">Statistics</span>
         <div className="flex-grow border-t border-gray-400 dark:border-gray-200"></div>
       </div>
 
-      {/* SearchBar Component */}
-      <div className="block mx-auto w-1/2 text-center">
+      {/* Dropdown Component */}
+      <div className="block w-1/2 mx-auto text-center">
         <AllCsvs />
       </div>
 
       {/* Bottom half of screen */}
-      <div className='flex flex-wrap justify-around w-full mx-auto m-10 p-10'>
-        <div className="shadow w-full p-10 sm:w-5/12 md:w-5/12 bg-white dark:bg-gray-700">
+      <div className='flex flex-wrap justify-around w-full p-10 m-10 mx-auto'>
+        <div className="w-full p-10 bg-white shadow sm:w-5/12 md:w-5/12 dark:bg-gray-700">
 
-          {/* Upload form  */}
+          {/* Upload Form  */}
           <UploadCsvForm />
-
+          {/* DataAnalysis Form */}
           <DataAnalysisForm />
         </div>
         
         {/* right side div for visual of form  */}
-        <div className="shadow w-full sm:w-5/12 md:w-5/12 p-10 bg-white dark:bg-gray-700">
+        <div className="w-full p-10 bg-white shadow sm:w-5/12 md:w-5/12 dark:bg-gray-700">
           <TableData parsedFileData={parsedFileData} />
         </div>
       </div>
